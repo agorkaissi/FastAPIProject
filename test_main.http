@@ -1,0 +1,157 @@
+# Test your FastAPI endpoints
+
+# Hello world test
+GET http://127.0.0.1:8000/
+Accept: application/json
+
+###
+# Hello user test
+GET http://127.0.0.1:8000/hello/User
+Accept: application/json
+
+###
+# calculator (sum) test
+GET http://127.0.0.1:8000/sum?x=0&y=10
+Accept: application/json
+
+###
+# calculator (subtract) test
+GET http://127.0.0.1:8000/subtract?x=1&y=3
+Accept: application/json
+
+###
+# calculator (multiply) test
+GET http://127.0.0.1:8000/multiply?x=2&y=5
+Accept: application/json
+
+###
+# geocode test
+GET http://127.0.0.1:8000/geocode?lat=50.0680275&lon=19.9098668
+Accept: application/json
+
+######################################################################
+
+###
+# get movies '/movies' test
+GET http://127.0.0.1:8000/movies
+Accept: application/json
+
+###
+# get movie '/movies/{movie_id}' test
+GET http://127.0.0.1:8000/movies/4
+Accept: application/json
+
+###
+# add movie '/movies' test
+POST http://localhost:8000/movies
+Content-Type: application/json
+
+{
+  "title": "Poranek Kojota",
+  "director": "Olaf Lubaszenko",
+  "year": "2001",
+  "description" :"Komedia"
+}
+
+###
+# remove movie '/movies/{movie_id}' test
+DELETE http://127.0.0.1:8000/movies/10
+Accept: application/json
+
+###
+# remove all movies '/movies' test
+DELETE http://127.0.0.1:8000/movies
+Accept: application/json
+
+###
+# update movie '/movies/{movie_id}' test
+PUT http://localhost:8000/movies/9
+Content-Type: application/json
+
+{
+  "title": "Poranek",
+  "director": "Olaf",
+  "year": "2001",
+  "description" :"Komedia dobra"
+}
+
+###
+# update movie single value '/movies/{movie_id}' test
+PUT http://localhost:8000/movies/9
+Content-Type: application/json
+
+{
+  "title": "Poranek Super Kojota",
+  "director": "Olaf123",
+  "year": "2002",
+  "description" :"Super dobra"
+}
+
+###
+# update single movie value '/movies/{movie_id}' test
+PATCH http://localhost:8000/movies/9
+Content-Type: application/json
+
+{
+  "title": "Poranek",
+  "year": "2001",
+  "description" :"Komedia dobra"
+}
+
+######################################################################
+
+###
+# get actors '/actors' test
+GET http://127.0.0.1:8000/actors
+Accept: application/json
+
+###
+# get actor '/actors/{actor_id}' test
+GET http://127.0.0.1:8000/actors/3
+Accept: application/json
+
+###
+# add actor '/actors' test
+POST http://127.0.0.1:8000/actors/
+Content-Type: application/json
+
+{
+  "name": "Olaf",
+  "surname": "Lubaszenkof"
+
+}
+
+###
+# remove'/actors/{actor_id}' test
+DELETE http://127.0.0.1:8000/actors/25
+Accept: application/json
+
+###
+#remove all "/actors" test
+DELETE http://127.0.0.1:8000/actors
+Accept: application/json
+
+###
+# Update actor '/actors/{actor_id}'" test
+PUT http://127.0.0.1:8000/actors/22
+Content-Type: application/json
+
+{
+  "name": "Olafffssss",
+  "surname": "Lubaszenkoooossss"
+
+}
+
+###
+# Update single actor value '/actors/{actor_id}'" test
+PATCH http://127.0.0.1:8000/actors/22
+Content-Type: application/json
+
+{
+  "surname": "Lubas_"
+}
+
+###
+# Get actors from movie /movies/{movie_id}/actors test
+GET http://127.0.0.1:8000/movies/6/actors
+Accept: application/json
