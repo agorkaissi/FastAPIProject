@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Depends
 from typing import Any
 from db import get_db, db_execute, row_to_dict
-from common import get_all, get_one, create, update, delete
+from common import get_all, get_one, create, update_put, update_patch, delete
 import logging
 import requests
 
@@ -66,11 +66,15 @@ def delete_movies_not_allowed():
         "Deleting all movies is not allowed"
     )
 
-@app.put("/movies/{movie_id}")
 @app.patch("/movies/{movie_id}")
-def update_movie(movie_id: int, params: dict[str, Any], db=Depends(get_db)):
-    update(db, "movie", movie_id, params, "Movie")
-    return {"movie_id": movie_id, "message": "Movie updated successfully"}
+def update_movie_patch(movie_id: int, params: dict[str, Any], db=Depends(get_db)):
+    update_patch(db,"movie", movie_id, params,"Movie", MOVIE_FIELDS)
+    return {"message": "Movie updated"}
+
+@app.put("/movies/{movie_id}")
+def update_movie_put(movie_id: int, params: dict[str, Any], db=Depends(get_db)):
+    update_put(db,"movie", movie_id, params,"Movie", MOVIE_FIELDS)
+    return {"message": "Movie replaced"}
 
 
 @app.get("/actors")
@@ -99,10 +103,14 @@ def delete_actors_not_allowed():
     )
 
 @app.put("/actors/{actor_id}")
+def update_actor_put(actor_id: int, params: dict[str, Any], db=Depends(get_db)):
+    update_put(db,"actor",actor_id,params,"Actor",ACTOR_FIELDS)
+    return {"message": "Actor replaced"}
+
 @app.patch("/actors/{actor_id}")
-def update_actor(actor_id: int, params: dict[str, Any], db=Depends(get_db)):
-    update(db, "actor", actor_id, params, "Actor")
-    return {"actor_id": actor_id, "message": "Actor updated successfully"}
+def update_actor_patch(actor_id: int, params: dict[str, Any], db=Depends(get_db)):
+    update_patch(db,"actor",actor_id,params,"Actor",ACTOR_FIELDS)
+    return {"message": "Actor updated"}
 
 @app.get("/movies/{movie_id}/actors")
 def get_actors_for_movie(movie_id: int, db=Depends(get_db)):

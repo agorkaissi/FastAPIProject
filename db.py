@@ -11,7 +11,7 @@ def get_db():
     finally:
         db.close()
 
-def row_to_dict(row, fields: list[str]) -> dict:
+def row_to_dict(row, fields: list[str]):
     return dict(zip(fields, row))
 
 def db_execute(

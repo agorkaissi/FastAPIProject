@@ -76,18 +76,6 @@ Content-Type: application/json
 }
 
 ###
-# update movie single value '/movies/{movie_id}' test
-PUT http://localhost:8000/movies/9
-Content-Type: application/json
-
-{
-  "title": "Poranek Super Kojota",
-  "director": "Olaf123",
-  "year": "2002",
-  "description" :"Super dobra"
-}
-
-###
 # update single movie value '/movies/{movie_id}' test
 PATCH http://localhost:8000/movies/9
 Content-Type: application/json
@@ -95,7 +83,7 @@ Content-Type: application/json
 {
   "title": "Poranek",
   "year": "2001",
-  "description" :"Komedia dobra"
+  "description" :"Komedia"
 }
 
 ######################################################################
@@ -117,7 +105,7 @@ Content-Type: application/json
 
 {
   "name": "Olaf",
-  "surname": "Lubaszenkof"
+  "surname": "Lubaszenko"
 
 }
 
@@ -151,7 +139,9 @@ Content-Type: application/json
   "surname": "Lubas_"
 }
 
+######################################################################
+
 ###
 # Get actors from movie /movies/{movie_id}/actors test
-GET http://127.0.0.1:8000/movies/6/actors
+GET http://127.0.0.1:8000/movies/4/actors
 Accept: application/json

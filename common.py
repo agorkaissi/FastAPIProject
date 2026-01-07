@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from db import db_execute,row_to_dict
+from db import db_execute, row_to_dict
 
 def get_all(db, table: str, fields: list[str], name: str):
     rows = db_execute(
@@ -60,21 +60,59 @@ def delete(db, table: str, entity_id: int, name: str):
             f"{name} not found"
         )
 
+def updatable_fields(fields: list[str]):
+    return [f for f in fields if f != "id"]
 
-def update(db, table: str, entity_id: int, params: dict, name: str):
+def update_patch(db, table: str, entity_id: int, params: dict, name: str, fields: list[str]):
     if not params:
         raise HTTPException(
             400,
             "No fields provided for update"
         )
 
-    fields = ", ".join(f"{k} = :{k}" for k in params)
+    allowed_fields = updatable_fields(fields)
+
+    for key in params:
+        if key not in allowed_fields:
+            raise HTTPException(
+                400,
+                f"Invalid field: {key}"
+            )
+
+    fields_sql = ", ".join(f"{k} = :{k}" for k in params)
     params["id"] = entity_id
 
     cursor = db_execute(
         db,
-        f"UPDATE {table} SET {fields} WHERE id = :id",
+        f"UPDATE {table} SET {fields_sql} WHERE id = :id",
         params
+    )
+
+    if cursor.rowcount == 0:
+        raise HTTPException(
+            404,
+            f"{name} not found"
+        )
+
+def update_put(db, table: str, entity_id: int, params: dict, name: str, fields: list[str]):
+    required_fields = updatable_fields(fields)
+
+    missing = [f for f in required_fields if f not in params]
+    if missing:
+        raise HTTPException(
+            400,
+            f"Missing fields for PUT: {', '.join(missing)}"
+        )
+
+    values = {f: params[f] for f in required_fields}
+    values["id"] = entity_id
+
+    fields_sql = ", ".join(f"{f} = :{f}" for f in required_fields)
+
+    cursor = db_execute(
+        db,
+        f"UPDATE {table} SET {fields_sql} WHERE id = :id",
+        values
     )
 
     if cursor.rowcount == 0:
