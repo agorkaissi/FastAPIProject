@@ -45,7 +45,7 @@ pip install -r requirements.txt
 ```
 ## Running the Application
 ```
-uvicorn app.main:app --reload
+uvicorn main:app --reload
 ```
 then open your browser (Tested on Brave) and open:
 
