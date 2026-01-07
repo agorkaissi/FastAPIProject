@@ -106,7 +106,6 @@ Content-Type: application/json
 {
   "name": "Olaf",
   "surname": "Lubaszenko"
-
 }
 
 ###
@@ -125,9 +124,8 @@ PUT http://127.0.0.1:8000/actors/22
 Content-Type: application/json
 
 {
-  "name": "Olafffssss",
-  "surname": "Lubaszenkoooossss"
-
+  "name": "Olaf",
+  "surname": "Lubaszenko"
 }
 
 ###
@@ -136,7 +134,7 @@ PATCH http://127.0.0.1:8000/actors/22
 Content-Type: application/json
 
 {
-  "surname": "Lubas_"
+  "surname": "Lubas"
 }
 
 ######################################################################
